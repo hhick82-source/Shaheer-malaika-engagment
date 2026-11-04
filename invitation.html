@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaheer & Malaika | Engagement Invitation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --gold: #b18a45;
+  --dark: #76582f;
+  --cream: #fbf7ef;
+  --ink: #44372a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--cream); color:var(--ink); font-family:'Cormorant Garamond',serif; overflow-x:hidden; }
+.script { font-family:'Great Vibes',cursive; color:var(--gold); }
+.display { font-family:'Playfair Display',serif; font-weight:400; }
+.reveal { opacity:0; transform:translateY(25px); transition:all .9s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* FIRST PAGE */
+#opening {
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px 15px;
+  background:radial-gradient(ellipse,#fffefa,#f3e9d7);
+  overflow:hidden;
+}
+.open-small {
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(25px,5vw,36px);
+  color:var(--gold);
+}
+.open-title {
+  font-family:'Playfair Display',serif;
+  font-weight:400;
+  font-size:clamp(35px,7vw,65px);
+  color:#75562e;
+  margin:8px 0;
+  line-height:1.2;
+}
+.open-third {
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(23px,4.5vw,33px);
+  color:var(--gold);
+  margin:8px 0 40px;
+}
+
+/* ENVELOPE */
+.envelope-wrap {
+  position:relative;
+  width:min(340px,86vw);
+  height:250px;
+  perspective:1200px;
+  cursor:pointer;
+}
+.envelope-back {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:190px;
+  background:#d5bd92;
+  box-shadow:0 18px 35px #5a442522;
+  z-index:1;
+}
+.letter {
+  position:absolute;
+  width:88%;
+  height:185px;
+  left:6%;
+  bottom:10px;
+  background:#fffdf8;
+  border:1px solid #d6bd8c;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  z-index:2;
+  transform:translateY(0);
+  transition:transform 1.6s cubic-bezier(.2,.75,.2,1);
+  box-shadow:0 3px 12px #00000015;
+}
+.letter p {
+  font-family:'Playfair Display',serif;
+  color:#87652f;
+  font-size:14px;
+  line-height:1.9;
+  letter-spacing:1px;
+}
+.envelope-front {
+  position:absolute;
+  inset:auto 0 0;
+  height:190px;
+  z-index:4;
+  pointer-events:none;
+}
+.envelope-front:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#eadbbd,#c9ad7c);
+  clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+}
+.envelope-front:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(45deg,#cfb78d,#eadbbd);
+  clip-path:polygon(0 100%,50% 48%,100% 100%);
+}
+.flap {
+  position:absolute;
+  left:0;
+  top:60px;
+  width:100%;
+  height:130px;
+  background:#e8d8b7;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;
+  transition:transform 1s ease;
+  z-index:6;
+  pointer-events:none;
+}
+.seal {
+  position:absolute;
+  left:50%;
+  top:137px;
+  transform:translateX(-50%);
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 35% 30%,#d7b66f,#93682f);
+  border:2px solid #ead09a;
+  color:white;
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  z-index:8;
+  box-shadow:0 4px 12px #0005;
+  transition:opacity .5s,transform .5s;
+}
+.tap {
+  font-size:12px;
+  letter-spacing:4px;
+  margin-top:22px;
+  color:#88683b;
+  animation:pulse 1.7s infinite;
+}
+@keyframes pulse { 50% { opacity:.4; } }
+
+#opening.opened .letter {
+  transform:translateY(-155px);
+  transition-delay:.3s;
+  z-index:3;
+}
+#opening.opened .flap { transform:rotateX(180deg); z-index:0; }
+#opening.opened .seal {
+  opacity:0;
+  transform:translate(-50%,-25px) scale(.5);
+}
+#opening.fade {
+  animation:fadeOut .9s forwards;
+}
+@keyframes fadeOut { to { opacity:0; visibility:hidden; } }
+
+/* MAIN INVITATION */
+#invitation { display:none; }
+#invitation.show { display:block; animation:fadeIn 1s ease; }
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+.hero {
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:70px 20px;
+  color:white;
+  background:linear-gradient(#21180f66,#21180f70),
+  url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85") center/cover;
+}
+.hero-kicker { letter-spacing:4px; font-size:13px; color:#f4dfb8; }
+.hero h2 { font-size:clamp(37px,7vw,68px); margin:35px 0 55px; line-height:1.25; }
+.hero-names { font-family:'Great Vibes',cursive; color:#f0d39c; font-size:clamp(55px,10vw,92px); }
+.hero-sub { font-size:24px; letter-spacing:2px; margin-top:8px; }
+.scroll { font-size:11px; letter-spacing:4px; margin-top:75px; }
+
+section.content { text-align:center; padding:85px 20px; }
+.intro { background:var(--cream); }
+.intro h2 { color:#92703d; font-size:clamp(35px,6vw,55px); line-height:1.2; }
+.intro p { max-width:680px; margin:25px auto; font-size:23px; line-height:1.6; }
+.intro .script { font-size:43px; margin-top:22px; }
+.rule { width:65px; height:1px; background:var(--gold); margin:23px auto; }
+
+.photo-section { text-align:center; padding:30px 20px 85px; }
+.ring-photo {
+  display:block;
+  width:min(760px,100%);
+  height:clamp(330px,65vw,540px);
+  object-fit:cover;
+  border:9px solid white;
+  outline:1px solid #d5bc8b;
+  margin:auto;
+  box-shadow:0 15px 40px #5b46251f;
+}
+.caption { color:var(--gold); letter-spacing:4px; font-size:12px; margin-top:28px; }
+
+/* SCRATCH */
+.scratch-section {
+  padding:90px 20px 100px;
+  text-align:center;
+  background:linear-gradient(145deg,#f8f0e2,#fffdf8);
+}
+.scratch-section h2 { font-size:clamp(38px,7vw,64px); color:var(--gold); margin:12px 0; }
+.scratch-section p { font-size:22px; }
+.scratch-box {
+  width:min(390px,90vw);
+  height:155px;
+  position:relative;
+  margin:38px auto 0;
+  background:white;
+  border:1px solid #c5a56d;
+  overflow:hidden;
+  touch-action:none;
+}
+.scratch-date {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,5.5vw,31px);
+  color:#a77b35;
+  font-weight:600;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .7s;
+}
+.scratch-box.revealed .scratch-date { visibility:visible; opacity:1; }
+#scratchCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:2; touch-action:none; }
+.scratch-box.revealed #scratchCanvas { opacity:0; pointer-events:none; }
+.scratch-instruction {
+  position:absolute;
+  inset:0;
+  z-index:3;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-family:'Playfair Display',serif;
+  letter-spacing:4px;
+  font-size:16px;
+  pointer-events:none;
+  text-shadow:0 1px 4px #67471e;
+}
+.scratch-box.revealed .scratch-instruction { display:none; }
+
+/* EVENT DETAILS */
+.details { background:#fffdf8; }
+.details .script { font-size:42px; }
+.details h2 { color:#92703d; font-size:clamp(34px,6vw,54px); }
+.details .sub { font-size:22px; margin:18px 0 38px; }
+.detail-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  max-width:1000px;
+  margin:auto;
+}
+.detail-card {
+  background:#fcf8ef;
+  border:1px solid #dfcda9;
+  padding:29px 10px;
+}
+.detail-card h3 {
+  color:var(--gold);
+  font-family:'Playfair Display',serif;
+  font-size:13px;
+  letter-spacing:2px;
+  margin-bottom:12px;
+}
+.detail-card p { font-size:21px; color:#332d26; }
+.calendar {
+  display:inline-block;
+  margin-top:34px;
+  padding:15px 30px;
+  background:#a98142;
+  color:white;
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+/* COUNTDOWN */
+.countdown-section { background:linear-gradient(140deg,#f5eddf,#fffdf8); }
+.countdown-section .small-gold { color:var(--gold); font-size:16px; letter-spacing:3px; }
+.countdown-section h2 { color:#94703a; font-size:clamp(36px,7vw,61px); margin:17px 0; }
+.countdown-section p { font-size:21px; margin-bottom:34px; }
+.countdown { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.time-box { width:105px; padding:20px 8px; border:1px solid #d7bd8b; background:white; }
+.time-box strong { display:block; font-size:32px; color:#a17b40; font-family:'Playfair Display',serif; font-weight:400; }
+.time-box span { font-size:11px; letter-spacing:2px; color:#80653d; }
+
+.final-image {
+  min-height:480px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:60px 20px;
+  color:white;
+  background:linear-gradient(#21180f55,#21180f66),
+  url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=85") center/cover;
+}
+.final-image h2 { font-family:'Great Vibes',cursive; font-size:clamp(55px,9vw,83px); color:#f1d49d; }
+.final-image p { font-size:22px; margin-top:14px; }
+
+/* LOCATION + FOOTER */
+.location { background:#fffdf8; text-align:center; padding:85px 20px; }
+.location .kicker { color:var(--gold); font-size:12px; letter-spacing:3px; }
+.location h2 { font-size:clamp(35px,6vw,55px); color:#94703a; margin-top:15px; }
+.location p { font-size:18px; letter-spacing:2px; margin:22px 0; }
+.qr { display:block; width:190px; height:190px; padding:9px; border:1px solid #d8bd88; margin:22px auto; }
+.map-link { color:#96713b; text-decoration:none; font-size:12px; letter-spacing:2px; border-bottom:1px solid #c7a56b; padding-bottom:5px; }
+footer { background:#e9deca; text-align:center; padding:42px 20px 30px; }
+.footer-image { width:112px; height:112px; border-radius:50%; object-fit:cover; border:3px solid white; margin-bottom:15px; }
+footer .script { font-size:40px; }
+footer p { font-size:13px; letter-spacing:2px; margin-top:10px; color:#755d3b; }
+
+#confetti { position:fixed; inset:0; pointer-events:none; z-index:99; overflow:hidden; }
+.confetti-piece { position:absolute; top:-20px; width:9px; height:14px; animation:fall 3.8s linear forwards; }
+@keyframes fall { to { transform:translateY(110vh) rotate(720deg); opacity:0; } }
+
+@media(max-width:700px) {
+  section.content { padding:70px 18px; }
+  .detail-grid { grid-template-columns:repeat(2,1fr); }
+  .hero h2 { margin:28px 0 42px; }
+}
+@media(max-width:380px) {
+  .detail-card p { font-size:18px; }
+  .time-box { width:83px; }
+}
+</style>
+</head>
+
+<body>
+<div id="confetti"></div>
+
+<!-- FIRST PAGE: ONLY TEXT AND ENVELOPE -->
+<section id="opening">
+  <div class="open-small">A Moment to Remember</div>
+  <h1 class="open-title">The Beginning of Forever</h1>
+  <div class="open-third">Something Special Is Waiting for You</div>
+
+  <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Open invitation">
+    <div class="envelope-back"></div>
+    <div class="letter">
+      <p>YOU ARE INVITED FOR<br><strong>SHAHEER &amp; MALAIKA</strong><br>ENGAGEMENT CELEBRATION</p>
+    </div>
+    <div class="envelope-front"></div>
+    <div class="flap"></div>
+    <div class="seal">SM</div>
+  </div>
+  <div class="tap">TAP TO OPEN</div>
+</section>
+
+<main id="invitation">
+
+  <section class="hero">
+    <div class="hero-kicker reveal">THE CELEBRATION OF A LIFETIME</div>
+    <h2 class="display reveal">With the Blessings of<br>Allah Almighty</h2>
+    <div class="hero-names reveal">Shaheer &amp; Malaika</div>
+    <div class="hero-sub reveal">are getting engaged</div>
+    <div class="scroll">SCROLL FOR MORE ↓</div>
+  </section>
+
+  <section class="content intro">
+    <h2 class="display reveal">Two Hearts, One<br>Beautiful Beginning</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">We would be delighted if you join us and make our day more memorable with your presence, love, prayers and blessings.</p>
+    <div class="script reveal">With Love &amp; Gratitude</div>
+  </section>
+
+  <section class="photo-section">
+    <img class="ring-photo reveal" src="ring-ceremony.jpg" alt="Groom putting a ring on the bride's finger"
+      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=85'">
+    <div class="caption reveal">SAVE THIS BEAUTIFUL MOMENT</div>
+  </section>
+
+  <section class="scratch-section">
+    <div class="reveal" style="font-size:12px;letter-spacing:3px;color:#a17b40">A SPECIAL DAY AWAITS</div>
+    <h2 class="display reveal">The Day We Say Yes</h2>
+    <p class="reveal">A special day, a thousand memories to come.</p>
+    <div class="scratch-box reveal" id="scratchBox">
+      <div class="scratch-date">25 NOVEMBER 2026</div>
+      <canvas id="scratchCanvas"></canvas>
+      <div class="scratch-instruction">SCRATCH HERE</div>
+    </div>
+  </section>
+
+  <section class="content details">
+    <div class="script reveal">A Day to Remember</div>
+    <h2 class="display reveal">We cannot wait to celebrate with you.</h2>
+    <div class="rule reveal"></div>
+    <div class="detail-grid">
+      <div class="detail-card reveal"><h3>THE OCCASION</h3><p>Our Engagement</p></div>
+      <div class="detail-card reveal"><h3>DATE</h3><p>25 November 2026</p></div>
+      <div class="detail-card reveal"><h3>DAY</h3><p>Wednesday</p></div>
+      <div class="detail-card reveal"><h3>TIME</h3><p>5:30 PM</p></div>
+    </div>
+    <a class="calendar" target="_blank" rel="noopener"
+      href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Shaheer%20%26%20Malaika%20Engagement&dates=20261125T123000Z/20261125T153000Z&details=Engagement%20celebration">
+      ADD TO CALENDAR
+    </a>
+  </section>
+
+  <section class="content countdown-section">
+    <div class="small-gold reveal">COUNTING EVERY MOMENT</div>
+    <h2 class="display reveal">Until Our Forever Begins...</h2>
+    <p class="reveal">Every second brings us closer to celebrating with you.</p>
+    <div class="countdown reveal">
+      <div class="time-box"><strong id="days">00</strong><span>DAYS</span></div>
+      <div class="time-box"><strong id="hours">00</strong><span>HOURS</span></div>
+      <div class="time-box"><strong id="minutes">00</strong><span>MINUTES</span></div>
+      <div class="time-box"><strong id="seconds">00</strong><span>SECONDS</span></div>
+    </div>
+  </section>
+
+  <section class="final-image">
+    <div class="reveal">
+      <h2>We'll See You There</h2>
+      <p>Your presence is the most beautiful gift for us.</p>
+    </div>
+  </section>
+
+  <section class="location">
+    <div class="kicker reveal">A PLACE TO CELEBRATE TOGETHER</div>
+    <h2 class="display reveal">Find Your Way to Us</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">SCAN THE QR CODE FOR LOCATION</p>
+    <a href="https://www.google.com/maps?q=31.6298611,74.3132778" target="_blank" rel="noopener">
+      <img class="qr reveal" alt="QR code for event location"
+        src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https%3A%2F%2Fwww.google.com%2Fmaps%3Fq%3D31.6298611%2C74.3132778">
+    </a>
+    <a class="map-link reveal" href="https://www.google.com/maps?q=31.6298611,74.3132778" target="_blank" rel="noopener">OPEN LOCATION IN GOOGLE MAPS</a>
+  </section>
+
+  <footer>
+    <img class="footer-image" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="Engagement celebration">
+    <div class="script">Shaheer &amp; Malaika</div>
+    <p>25 NOVEMBER 2026 · WITH LOVE</p>
+  </footer>
+</main>
+
+<script>
+/* ENVELOPE OPENING */
+const opening = document.getElementById('opening');
+const envelope = document.getElementById('envelope');
+const invitation = document.getElementById('invitation');
+let opened = false;
+
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+  opening.classList.add('opened');
+
+  setTimeout(() => {
+    opening.classList.add('fade');
+    setTimeout(() => {
+      opening.style.display = 'none';
+      invitation.classList.add('show');
+      window.scrollTo(0, 0);
+      startRevealObserver();
+    }, 900);
+  }, 2300);
+}
+envelope.addEventListener('click', openEnvelope);
+envelope.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openEnvelope();
+  }
+});
+
+/* TEXT AND ELEMENT ANIMATIONS */
+function startRevealObserver() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('#invitation .reveal').forEach(el => observer.observe(el));
+}
+
+/* SCRATCH CARD */
+const canvas = document.getElementById('scratchCanvas');
+const scratchBox = document.getElementById('scratchBox');
+const ctx = canvas.getContext('2d');
+let scratching = false;
+let revealed = false;
+let lastCheck = 0;
+
+function setupScratch() {
+  const rect = scratchBox.getBoundingClientRect();
+  if (!rect.width) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(rect.width * dpr);
+  canvas.height = Math.round(rect.height * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+  gradient.addColorStop(0, '#b18a45');
+  gradient.addColorStop(0.5, '#e4cf9e');
+  gradient.addColorStop(1, '#9c743b');
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, rect.width, rect.height);
+
+  ctx.strokeStyle = 'rgba(255,255,255,.22)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < rect.width; x += 13) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, rect.height);
+    ctx.stroke();
+  }
+}
+
+function scratchPoint(e) {
+  const rect = canvas.getBoundingClientRect();
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function erase(e) {
+  if (!scratching || revealed) return;
+  e.preventDefault();
+
+  const point = scratchPoint(e);
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath();
+  ctx.arc(point.x, point.y, 19, 0, Math.PI * 2);
+  ctx.fill();
+
+  if (Date.now() - lastCheck > 200) {
+    lastCheck = Date.now();
+    checkScratchProgress();
+  }
+}
+
+function checkScratchProgress() {
+  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  let cleared = 0;
+  let total = 0;
+
+  for (let i = 3; i < pixels.length; i += 4) {
+    total++;
+    if (pixels[i] < 100) cleared++;
+  }
+
+  if (total && cleared / total >= 0.40) revealDate();
+}
+
+function revealDate() {
+  if (revealed) return;
+  revealed = true;
+  scratchBox.classList.add('revealed');
+  launchConfetti();
+}
+
+canvas.addEventListener('pointerdown', e => {
+  if (revealed) return;
+  scratching = true;
+  canvas.setPointerCapture(e.pointerId);
+  erase(e);
+});
+canvas.addEventListener('pointermove', erase);
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => {
+  canvas.addEventListener(type, () => scratching = false);
+});
+window.addEventListener('load', setupScratch);
+window.addEventListener('resize', () => {
+  if (!revealed) setupScratch();
+});
+
+/* CONFETTI PARTY POPPERS */
+function launchConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#b18a45', '#e4c98f', '#fff1d1', '#a77d3d', '#d9b7a1'];
+
+  for (let i = 0; i < 125; i++) {
+    const piece = document.createElement('i');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 1.2 + 's';
+    piece.style.animationDuration = (2.8 + Math.random() * 2) + 's';
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 5500);
+  }
+}
+
+/* COUNTDOWN: 25 NOVEMBER 2026, 5:30 PM PAKISTAN TIME */
+function updateCountdown() {
+  const target = Date.parse('2026-11-25T12:30:00Z');
+  let diff = Math.max(0, target - Date.now());
+
+  const days = Math.floor(diff / 86400000);
+  diff %= 86400000;
+  const hours = Math.floor(diff / 3600000);
+  diff %= 3600000;
+  const minutes = Math.floor(diff / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('days').textContent = String(days).padStart(2, '0');
+  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+  document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
